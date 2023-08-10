@@ -1,6 +1,7 @@
 html,body{
     width: 100%;
     height: 100%;
+    background-color: rgb(43, 40, 40);
 }
 .parrafo{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -14,6 +15,29 @@ h1{
     font-family:monospace;
     font-size: 40px;
 }
-img{
+cimg{
    margin: 200px;
+}
+p span{
+    color: rgb(65, 128, 23);
+}
+.container{
+    background-color: rgb(65, 61, 61);
+    display: flex;
+    flex-direction: column;
+}
+.c-1{
+    width: 250px;
+    height: 250px;
+    background-color: aqua;
+}
+.c-2{
+    width: 250px;
+    height: 250px;
+    background-color: crimson;
+}
+.c-3{
+    height: 250px;
+    height: 250px;
+    background-color: gold;
 }
