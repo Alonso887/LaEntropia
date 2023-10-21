@@ -35,10 +35,10 @@ def the_boxgame(bd):#bd means box data, i'm terrible with acronyms
         else:
             print(box_designs[0])
             print(box_designs[bd[choice1-1]])
-        s(5)
+        s(10)
         c()
         print("Now is your turn player 2, will the tricks of your friend make you choose the wrong box or will you be succsesfull")
-        print("(Remember tu use only number 1 or 2 pls)")
+        print("(Remember to use only number 1 or 2 pls)")
         print(box_designs[0])
         print(box_designs[0])
         choice2 = int(input("> "))
