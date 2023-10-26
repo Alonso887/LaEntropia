@@ -10,15 +10,39 @@ def calendar_p2():
     print("|")
 def calendar_p3(vals,fd):
      for i in vals:
-         dt = fd - timedelta(days=i)
+         dt = fd + timedelta(days=i)
          ds = dt.day
-         print(f"|    {ds}    ",end='')
-         print("|")
+         print(f"|   {ds}   ",end='')
+         if len(str(ds)) < 2:
+             print(" ",end='')
+     print("|")
 def print_calendary(final_date):
     print("                            CALENDAR\n  MONDAY  TUESDAY  WEDNESDAY THURSDAY  FRIDAY SATURDAY  SUNDAY")
     calendar_p1()
     calendar_p2()
-    calendar_p3([0,1,2,3,4,5],final_date)
+    calendar_p3([0,1,2,3,4,5,6],final_date)
+    calendar_p2()
+    calendar_p1()
+    calendar_p2()
+    calendar_p3([7,8,9,10,11,12,13],final_date)
+    calendar_p2()
+    calendar_p1()
+    calendar_p2()
+    calendar_p3([14,15,16,17,18,19,20],final_date)
+    calendar_p2()
+    calendar_p1()
+    calendar_p2()
+    calendar_p3([21,22,23,24,25,26,27],final_date)
+    calendar_p2()
+    calendar_p1()
+    calendar_p2()
+    calendar_p3([28,29,30,31,32,33,34],final_date)
+    calendar_p2()
+    calendar_p1()
+    calendar_p2()
+    calendar_p3([35,36,37,38,39,40,41],final_date)
+    calendar_p2()
+    calendar_p1()
 
 def input_interpretation(p):#just making sure the date_info variable gets the right values
     selected_date = datetime.datetime(p[0],p[1],1)
@@ -29,6 +53,7 @@ def input_interpretation(p):#just making sure the date_info variable gets the ri
             selected_date = selected_date - timedelta(days=1)
         else:
             break
+        selected_date = selected_date - timedelta(days=1)
         return selected_date
     
 
