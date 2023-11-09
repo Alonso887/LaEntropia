@@ -45,9 +45,6 @@ def full_check():
         start_cell[0] += 1
     return full_date_list 
 
-
-a=full_check()
-print(a)
 wb.save(r"C:\Users\aadri\Desktop\Escuela\Training_Matrix_2006_joke.xlsx")
 
 
