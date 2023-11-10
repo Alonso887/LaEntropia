@@ -43,7 +43,9 @@ def full_check():
         full_date_list[person_list] = date_list
         name_cell[0] += 1
         start_cell[0] += 1
-    return full_date_list 
+    return full_date_list
+def printorta(a):
+    print(a)
 
 wb.save(r"C:\Users\aadri\Desktop\Escuela\Training_Matrix_2006_joke.xlsx")
 
