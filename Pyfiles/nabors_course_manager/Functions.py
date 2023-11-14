@@ -43,6 +43,7 @@ def full_check():
         full_date_list[person_list] = date_list
         name_cell[0] += 1
         start_cell[0] += 1
+    print(full_date_list)
     return full_date_list
 def printorta(a):
     print(a)
