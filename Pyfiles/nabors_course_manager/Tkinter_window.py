@@ -2,7 +2,7 @@ import tkinter as tk
 import Functions as fu
 from tkinter import ttk
 def print_key():
-    print("sexoooo")
+    print("Puto")
 
 main = tk.Tk()
 main_x = 640#width of the main window
@@ -11,11 +11,13 @@ main.geometry(f"{main_x}x{main_y}+{round(main.winfo_screenwidth()/2 - main_x/2)}
 main.resizable(False,False)
 
 main.iconbitmap(r"imagenes\LaEntropia_icon.ico")
+ttk.Label(main,text="Course manager",font=("Helvetica",16)).pack(anchor=tk.W,padx=5,pady=10)
 
-ttk.Label(main,text="Hello world").pack()
+entry_1  = ttk.Entry(main)
+entry_1.pack(anchor=tk.W,padx=5,pady=10)
 
 boton_1 = ttk.Button(main,text="Boton",command=print_key)
 boton_1.focus()
-boton_1.pack(expand=True)
+boton_1.pack(anchor=tk.W)
 
 main.mainloop()
