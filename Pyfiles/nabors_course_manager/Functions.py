@@ -2,8 +2,10 @@ from openpyxl import Workbook, load_workbook
 
 wb = load_workbook(filename=r'C:\Users\aadri\Desktop\Escuela\Training_Matrix_2006.xlsx')
 ws1 = wb["Crew"]
-def get_name():#First this funtion looks for the name of the person we want data from
-    name_wanted = input("Wich person do you need data from?\n> ")
+def get_name(file_path,name):#First this funtion looks for the name of the person we want data from
+    wb = load_workbook(filename=file_path)
+    ws1 = wb["Crew"]
+    name_wanted = name
     name_wanted = name_wanted.replace(" ","").lower()
     while True:
         person_cell = [7,3]#cell we re looking in and where this will start to look for people
