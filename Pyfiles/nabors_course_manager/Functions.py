@@ -1,10 +1,8 @@
 from openpyxl import Workbook, load_workbook
+wb = None
+ws1 = None
 
-wb = load_workbook(filename=r'C:\Users\aadri\Desktop\Escuela\Training_Matrix_2006.xlsx')
-ws1 = wb["Crew"]
-def get_name(file_path,name):#First this funtion looks for the name of the person we want data from
-    wb = load_workbook(filename=file_path)
-    ws1 = wb["Crew"]
+def get_name(name):#First this funtion looks for the name of the person we want data from
     name_wanted = name
     name_wanted = name_wanted.replace(" ","").lower()
     while True:
@@ -30,6 +28,7 @@ def get_date_list(person_cell):#this one uses get_name to locate the persons dat
             break
         date_list.append(ws1.cell(row=person_cell[0],column=course_cell[1]).value)
         course_cell[1] += 1
+    print(date_list)
     return date_list
 
 def full_check():
@@ -45,6 +44,9 @@ def full_check():
         full_date_list[person_list] = date_list
         name_cell[0] += 1
         start_cell[0] += 1
-    print(full_date_list)
     return full_date_list
-wb.save(r"C:\Users\aadri\Desktop\Escuela\Training_Matrix_2006_joke.xlsx")
+
+def activate_wb(file_path):#Well it sets the actual workbook, i actually feel bad for using the global
+    global wb, ws1#i mean it's not bad i guess but i feel like it's a bad method or something
+    wb = load_workbook(file_path)#works for this silly program but i think i should use it less
+    ws1 = wb["Crew"]

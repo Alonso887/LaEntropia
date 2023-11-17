@@ -1,38 +1,38 @@
 import tkinter as tk
-from tkinter import filedialog
+from tkcalendar import Calendar
 
-class FileSelectorApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("File Selector")
+def mostrar_calendario():
+    fecha_seleccionada = cal.get_date()
+    etiqueta.config(text=f"Fecha seleccionada: {fecha_seleccionada}")
+    top_calendario.destroy()
 
-        # Create a StringVar to store the file path
-        self.file_path_var = tk.StringVar()
+def abrir_calendario():
+    global top_calendario
+    top_calendario = tk.Toplevel(ventana)
+    top_calendario.title("Selector de Fecha")
 
-        # Create Entry widget to display the selected file path
-        self.file_path_entry = tk.Entry(root, textvariable=self.file_path_var, width=40)
-        self.file_path_entry.grid(row=0, column=0, padx=10, pady=10)
+    # Crear un widget de calendario en la ventana superior
+    global cal
+    cal = Calendar(top_calendario, selectmode="day", year=2023, month=1, day=1)
+    cal.pack(pady=10)
 
-        # Create buttons to open the file dialog and use the selected file
-        open_button = tk.Button(root, text="Open File", command=self.open_file)
-        open_button.grid(row=0, column=1, padx=10, pady=10)
+    # Crear un botón para cerrar el calendario y obtener la fecha seleccionada
+    boton_cerrar_calendario = tk.Button(top_calendario, text="Seleccionar Fecha", command=mostrar_calendario)
+    boton_cerrar_calendario.pack(pady=10)
 
-        use_button = tk.Button(root, text="Use File", command=self.use_file)
-        use_button.grid(row=1, column=0, columnspan=2, pady=10)
+# Crear la ventana principal
+ventana = tk.Tk()
+ventana.title("Calendario con Botón")
 
-    def open_file(self):
-        file_path = filedialog.askopenfilename()
-        # Update the StringVar with the selected file path
-        self.file_path_var.set(file_path)
+# Crear un botón para abrir el calendario
+boton_abrir_calendario = tk.Button(ventana, text="Abrir Calendario", command=abrir_calendario)
+boton_abrir_calendario.pack(pady=10)
 
-    def use_file(self):
-        # Get the file path from the StringVar
-        file_path = self.file_path_var.get()
-        # Now you can use the file_path variable in your program as needed
-        print("Selected file path:", file_path)
+# Crear una etiqueta para mostrar la fecha seleccionada
+etiqueta = tk.Label(ventana, text="Fecha seleccionada: ")
+etiqueta.pack(pady=10)
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = FileSelectorApp(root)
-    root.mainloop()
+# Iniciar el bucle de eventos
+ventana.mainloop()
+
 
