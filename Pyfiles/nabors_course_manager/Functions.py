@@ -3,22 +3,23 @@ import datetime
 wb = None
 ws1 = None
 
-def get_name(name):#First this funtion looks for the name of the person we want data from
+def get_name(name,name_cell):#First this funtion looks for the name of the person we want data from
     name_wanted = name
     name_wanted = name_wanted.replace(" ","").lower()
+    if isinstance(name_cell[0], str) and not name_cell[0].strip():
+        name_cell = [7,3]#cell we re looking in and where this will start to look for people
     while True:
-        person_cell = [7,3]#cell we re looking in and where this will start to look for people
-        name_checking = ws1.cell(row=person_cell[0],column=person_cell[1]).value
+        name_checking = ws1.cell(row=name_cell[0],column=name_cell[1]).value
         try:
             name_checking = name_checking.replace(" ","").lower()
         except:
             print("Name not founded")
             break
         if name_checking == name_wanted:
-            return person_cell
+            return name_cell
             break
         else:
-            person_cell[0] += 1
+            name_cell[0] += 1
 def get_date_list(name_cell,course_cell):#this one uses get_name to locate the persons date
     if isinstance(course_cell[0], str) and not course_cell[0].strip():
         course_cell=[5,8]#where the courses start
@@ -89,6 +90,6 @@ def get_data(file_path,name,course_cell,start_cell,name_cell,starting_date,endin
         data = full_date_list_filter(full_check(start_cell,name_cell,course_cell),starting_date,ending_date)
         return data
     else:
-        data = date_list_filter(get_date_list(get_name(name),course_cell),starting_date,ending_date)
+        data = date_list_filter(get_date_list(get_name(name,name_cell),course_cell),starting_date,ending_date)
         return data
     
