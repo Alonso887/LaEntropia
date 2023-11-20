@@ -24,10 +24,13 @@ def get_date_list(name_cell,course_cell):#this one uses get_name to locate the p
         course_cell=[5,8]#where the courses start
     date_list = []
     while True:
+        data = []
         check_course = ws1.cell(row=course_cell[0],column=course_cell[1]).value#the cell we are going to check
         if check_course == None:
             break
-        date_list.append(ws1.cell(row=name_cell[0],column=course_cell[1]).value)
+        data.append(ws1.cell(row=name_cell[0],column=course_cell[1]).value)
+        data.append(check_course)
+        date_list.append(data)
         course_cell[1] += 1
     return date_list
 
@@ -50,9 +53,12 @@ def full_check(start_cell,name_cell,course_cell):
 def date_list_filter(date_list,starting_date,ending_date):#takes the date list from a person and turns it into a single list between the date ranges given
     filt_date_list = []
     for i in date_list:
-        if isinstance(i,datetime.datetime):#only dates today baby :>      
-            if i > starting_date and i< ending_date:
-                filt_date_list.append(i)
+        k = i[0]
+        if  not isinstance(k,datetime.datetime):#only dates today baby :>  
+            continue    
+        if not starting_date.date() <= k.date() <= ending_date.date():
+            continue
+        filt_date_list.append(i)
     return filt_date_list
 
 def full_date_list_filter(full_date_list,starting_date,ending_date):#like date list filter but for everithing, like it uses datelist filter fr 
@@ -75,9 +81,9 @@ def get_data(file_path,name,course_cell,start_cell,name_cell,starting_date,endin
     name_cell = name_cell.replace(" ","").split(",")
     
     starting_date = starting_date.replace(" ","").split("/")
-    starting_date = datetime.datetime(int(starting_date[2]),int(starting_date[1]),int(starting_date[0]))
-    ending_date = ending_date.replace(" ","").split("/")
-    ending_date = datetime.datetime(int(ending_date[2]),int(ending_date[1]),int(ending_date[0]))
+    starting_date = datetime.datetime(int(starting_date[2])+2000,int(starting_date[1]),int(starting_date[0]))
+    ending_date = ending_date.replace(" ","").split("/")#I added 2000 years for this to work so it reads 2023 not 23, change it if i'ts year 3000
+    ending_date = datetime.datetime(int(ending_date[2])+2000,int(ending_date[1]),int(ending_date[0]))
 
     if isinstance(name, str) and not name.strip():
         data = full_date_list_filter(full_check(start_cell,name_cell,course_cell),starting_date,ending_date)
