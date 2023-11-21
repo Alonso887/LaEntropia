@@ -3,6 +3,7 @@ from tkinter import ttk
 import Functions as fu
 from tkinter import filedialog as fd
 from tkcalendar import Calendar
+import datetime
 
 def select_file():
      global file_path
@@ -67,6 +68,47 @@ def show_info(number):
      close_info_window = tk.Button(info_window,font=("Tahoma",9),text="Close",command=info_window.destroy)
      close_info_window.pack()
 
+def on_canvas_scroll(*args):
+    canvas.yview(*args)
+def dates_window():#Creates the window for showing the data :)
+     global canvas
+     date_window = tk.Toplevel()
+     date_window.geometry(f"{main_x}x{main_y}+{round(main.winfo_screenwidth()/2 - main_x/2)}+{round(main.winfo_screenheight()/2 - main_y/2)}")
+     date_window.resizable(False,False)
+     
+     list_frame = tk.Frame(date_window,width=main_x/2,height=main_y,bg='lightblue',borderwidth=1,relief=tk.SOLID)
+     list_frame.pack(fill=tk.Y,side=tk.LEFT)#The frames we will need
+     calendar_frame = tk.Frame(date_window,width=main_x/2,height=main_y,bg='white',borderwidth=1,relief=tk.SOLID)
+     calendar_frame.pack(fill=tk.Y,side=tk.RIGHT)
+
+     canvas = tk.Canvas(list_frame,height=main_y,width=main_x/2,background="white")#Canvas with the text and
+     canvas_scrollbar_y = ttk.Scrollbar(list_frame,orient="vertical",command=on_canvas_scroll)#Scrollbar
+     canvas.config(yscrollcommand=canvas_scrollbar_y.set)
+     canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+     canvas_scrollbar_y.pack(side=tk.RIGHT, fill=tk.Y)
+
+     sd = starting_date.get()#Getting vars for the calendar
+     sd = sd.replace(" ","").split("/")#same method used in funtions
+     sd = datetime.datetime(int(sd[2])+2000,int(sd[1]),int(sd[0]))#Allowed myself some space for better understanding
+     ed = ending_date.get()
+     ed = ed.replace(" ","").split("/")#I added 2000 years for this to work so it reads 2023 not 23, change it if i'ts year 3000
+     ed = datetime.datetime(int(ed[2])+2000,int(ed[1]),int(ed[0]))
+
+     calendar = Calendar(calendar_frame,selectmode='none',mindate=sd,maxdate=ed,year=sd.year,month=sd.month,day=sd.day)
+     calendar.tag_config("event",background="red",foreground="black")
+     calendar.pack()
+        
+     data_list = fu.get_data(file_path.get(),person.get(),course_cell.get(),date_cell.get(),name_cell.get(),starting_date.get(),ending_date.get())
+     if isinstance(data_list,list):#if the data is from a person
+          date_window.title(person.get())
+          initial_height = 20
+          for i in data_list:
+               text = canvas.create_text(5,initial_height,text=f"{i[0].date()}-{i[1]}",font=("Tahoma", 10),anchor=tk.NW)
+               initial_height += 20
+               calendar.calevent_create(date=i[0],text=i[1],tags="event")
+     #elif isinstance(data_list,dict):#if we want data from all people
+
+
 main = tk.Tk()
 main_x = 640#width of the main window
 main_y = 360#height of the main window
@@ -110,28 +152,31 @@ person_label.place(x=175,y=190)
 person_button = tk.Button(main,font=("Tahoma",10),text="i",command=lambda:show_info(1))
 person_button.place(x=245,y=185)
 
-course_cell_entry = tk.Entry(main,font=("Tahoma",10),textvariable=course_cell)
+course_cell_entry = tk.Entry(main,font=("Tahoma",10),textvariable=course_cell)#Check the asigned var
 course_cell_entry.place(x=15,y=225)
 course_cell_label = tk.Label(main,font=("Tahoma",10),text="Course cell",bd=1,relief="solid")
 course_cell_label.place(x=175,y=225)
 course_cell_button = tk.Button(main,font=("Tahoma",10),text="i",command=lambda:show_info(2))
 course_cell_button.place(x=245,y=220)
 
-name_cell_entry = tk.Entry(main,font=("Tahoma",10),textvariable=name_cell)
+name_cell_entry = tk.Entry(main,font=("Tahoma",10),textvariable=name_cell)#Check the asigned var
 name_cell_entry.place(x=15,y=260)
 name_cell_label = tk.Label(main,font=("Tahoma",10),text="Name cell",bd=1,relief="solid")
 name_cell_label.place(x=175,y=260)
 name_cell_button = tk.Button(main,font=("Tahoma",10),text="i",command=lambda:show_info(3))
 name_cell_button.place(x=245,y=255)
 
-date_cell_entry = tk.Entry(main,font=("Tahoma",10),textvariable=date_cell)
+date_cell_entry = tk.Entry(main,font=("Tahoma",10),textvariable=date_cell)#Check the asigned var
 date_cell_entry.place(x=15,y=295)
 date_cell_label = tk.Label(main,font=("Tahoma",10),text="Date cell",bd=1,relief="solid")
 date_cell_label.place(x=175,y=295)
 date_cell_button = tk.Button(main,font=("Tahoma",10),text="i",command=lambda:show_info(4))
 date_cell_button.place(x=245,y=290)
 
+done_button = tk.Button(main,font=("Tahoma",10),text="Search",command=dates_window)
+done_button.place(x=15,y=320)
+
 main.mainloop()
 
-a = fu.get_data(file_path.get(),person.get(),course_cell.get(),date_cell.get(),name_cell.get(),starting_date.get(),ending_date.get())
-print(a)
+#a = fu.get_data(file_path.get(),person.get(),course_cell.get(),date_cell.get(),name_cell.get(),starting_date.get(),ending_date.get())
+#print(a)
