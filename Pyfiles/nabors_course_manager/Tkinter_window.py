@@ -106,8 +106,15 @@ def dates_window():#Creates the window for showing the data :)
                text = canvas.create_text(5,initial_height,text=f"{i[0].date()}-{i[1]}",font=("Tahoma", 10),anchor=tk.NW)
                initial_height += 20
                calendar.calevent_create(date=i[0],text=i[1],tags="event")
-     #elif isinstance(data_list,dict):#if we want data from all people
-
+     elif isinstance(data_list,dict):#if we want data from all people
+          initial_height = 20
+          for i, k in data_list.items():
+               text1 = canvas.create_text(0,initial_height,text=i,font=("Tahoma",12),anchor=tk.NW)
+               initial_height += 20
+               for j in k:
+                    text = canvas.create_text(5,initial_height,text=f"{j[0].date()}-{j[1]}",font=("Tahoma", 10),anchor=tk.NW)
+                    initial_height += 20
+                    calendar.calevent_create(date=j[0],text=i[1],tags="event")
 
 main = tk.Tk()
 main_x = 640#width of the main window
