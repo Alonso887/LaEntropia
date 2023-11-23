@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import ttk 
 import Functions as fu
 from tkinter import filedialog as fd
+import tkcalendar
 from tkcalendar import Calendar
-import datetime, tkcalendar
+import datetime
 
 def select_file():
      global file_path
@@ -24,7 +25,7 @@ def show_starting_calendar():#This creates a toplevel window so the user selects
      cal_window.title("Select a date")
 
      global cal
-     cal = Calendar(cal_window, selectmode="day", year=2023, month=1, day=1)
+     cal = tkcalendar.Calendar(cal_window, selectmode="day", year=2023, month=1, day=1)
      cal.pack(pady=10)
 
      close_calendar = tk.Button(cal_window,text="Select date",font=("Tahoma",10),command=get_starting_date)
@@ -43,7 +44,7 @@ def show_ending_calendar():#This creates a toplevel window so the user selects a
      cal_window.title("Select a date")
 
      global cal
-     cal = Calendar(cal_window, selectmode="day", year=2023, month=1, day=1)
+     cal = tkcalendar.Calendar(cal_window, selectmode="day", year=2023, month=1, day=1)
      cal.pack(pady=10)
 
      close_calendar = tk.Button(cal_window,text="Select date",font=("Tahoma",10),command=get_ending_date)
@@ -94,7 +95,7 @@ def dates_window():#Creates the window for showing the data :)
      ed = ed.replace(" ","").split("/")#I added 2000 years for this to work so it reads 2023 not 23, change it if i'ts year 3000
      ed = datetime.datetime(int(ed[2])+2000,int(ed[1]),int(ed[0]))
 
-     calendar = Calendar(calendar_frame,selectmode='none',mindate=sd,maxdate=ed,year=sd.year,month=sd.month,day=sd.day)
+     calendar = tkcalendar.Calendar(calendar_frame,selectmode='none',mindate=sd,maxdate=ed,year=sd.year,month=sd.month,day=sd.day)
      calendar.tag_config("event",background="red",foreground="black")
      calendar.pack()
         
